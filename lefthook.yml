@@ -1,0 +1,13 @@
+pre-commit:
+  commands:
+    type-check:
+      run: npm run type-check
+    prettier:
+      glob: '*.{ts,js,json,md,yml,yaml}'
+      run: npx prettier --write {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    test:
+      run: npm test
