@@ -15,6 +15,8 @@ interface ViewOptions {
   json?: boolean
   ndjson?: boolean
   full?: boolean
+  unread?: boolean
+  context?: string
 }
 
 interface ReplyOptions {
@@ -23,6 +25,18 @@ interface ReplyOptions {
 
 interface DoneOptions {
   dryRun?: boolean
+}
+
+function printSeparator(label: string): void {
+  const totalWidth = 60
+  const labelWithPadding = ` ${label} `
+  const remainingWidth = totalWidth - labelWithPadding.length
+  const leftWidth = Math.floor(remainingWidth / 2)
+  const rightWidth = remainingWidth - leftWidth
+  const line = chalk.dim('─'.repeat(leftWidth) + labelWithPadding + '─'.repeat(rightWidth))
+  console.log('')
+  console.log(line)
+  console.log('')
 }
 
 async function viewThread(ref: string, options: ViewOptions): Promise<void> {
@@ -43,7 +57,18 @@ async function viewThread(ref: string, options: ViewOptions): Promise<void> {
   )
 
   const thread = threadResponse.data
-  const comments = commentsResponse.data
+  let comments = commentsResponse.data
+
+  let lastReadObjIndex: number | null = null
+  if (options.unread) {
+    const unreadData = await client.threads.getUnread(thread.workspaceId)
+    const threadUnread = unreadData.find((u) => u.threadId === threadId)
+    if (!threadUnread) {
+      console.log('No unread comments in this thread.')
+      return
+    }
+    lastReadObjIndex = threadUnread.objIndex
+  }
 
   const userIds = new Set<number>([thread.creator, ...comments.map((c) => c.creator)])
   const userCalls = [...userIds].map((id) =>
@@ -104,21 +129,77 @@ async function viewThread(ref: string, options: ViewOptions): Promise<void> {
   console.log(chalk.bold(thread.title))
   console.log(colors.channel(`[${channel.name}]`))
   console.log('')
-  console.log(`${colors.author(userMap.get(thread.creator) || `user:${thread.creator}`)}  ${colors.timestamp(formatRelativeDate(thread.posted))}`)
-  console.log('')
-  console.log(options.raw ? thread.content : thread.content)
-  console.log('')
 
-  if (comments.length > 0) {
-    console.log(chalk.dim(`--- ${comments.length} comment${comments.length === 1 ? '' : 's'} ---`))
+  if (options.unread && lastReadObjIndex !== null) {
+    const contextSize = options.context ? parseInt(options.context, 10) : 0
+    const unreadComments = comments.filter((c) => (c.objIndex ?? 0) > lastReadObjIndex)
+    const contextComments = comments
+      .filter((c) => (c.objIndex ?? 0) <= lastReadObjIndex)
+      .sort((a, b) => (b.objIndex ?? 0) - (a.objIndex ?? 0))
+      .slice(0, contextSize)
+      .reverse()
+
+    if (unreadComments.length === 0) {
+      console.log('No unread comments.')
+      return
+    }
+
+    // Show original post
+    console.log(`${colors.author(userMap.get(thread.creator) || `user:${thread.creator}`)}  ${colors.timestamp(formatRelativeDate(thread.posted))}  ${chalk.dim('(original post)')}`)
     console.log('')
+    console.log(options.raw ? thread.content : thread.content)
 
-    for (const comment of comments) {
+    // Show context comments (already-read ones before unread)
+    if (contextComments.length > 0) {
+      const firstContextIndex = contextComments[0].objIndex ?? 0
+      const skippedCount = firstContextIndex - 1
+      if (skippedCount > 0) {
+        printSeparator(`${skippedCount} comment${skippedCount === 1 ? '' : 's'} skipped`)
+      } else {
+        console.log('')
+      }
+
+      for (const comment of contextComments) {
+        const author = colors.author(userMap.get(comment.creator) || `user:${comment.creator}`)
+        const time = colors.timestamp(formatRelativeDate(comment.posted))
+        console.log(`${author}  ${time}  ${colors.timestamp(`id:${comment.id}`)}`)
+        console.log(options.raw ? comment.content : comment.content)
+        console.log('')
+      }
+    } else {
+      const skippedCount = lastReadObjIndex
+      if (skippedCount > 0) {
+        printSeparator(`${skippedCount} comment${skippedCount === 1 ? '' : 's'} skipped`)
+      }
+    }
+
+    printSeparator(`UNREAD (${unreadComments.length} new)`)
+
+    for (const comment of unreadComments) {
       const author = colors.author(userMap.get(comment.creator) || `user:${comment.creator}`)
       const time = colors.timestamp(formatRelativeDate(comment.posted))
       console.log(`${author}  ${time}  ${colors.timestamp(`id:${comment.id}`)}`)
       console.log(options.raw ? comment.content : comment.content)
       console.log('')
+    }
+  } else {
+    // Standard view (no --unread flag)
+    console.log(`${colors.author(userMap.get(thread.creator) || `user:${thread.creator}`)}  ${colors.timestamp(formatRelativeDate(thread.posted))}`)
+    console.log('')
+    console.log(options.raw ? thread.content : thread.content)
+    console.log('')
+
+    if (comments.length > 0) {
+      console.log(chalk.dim(`--- ${comments.length} comment${comments.length === 1 ? '' : 's'} ---`))
+      console.log('')
+
+      for (const comment of comments) {
+        const author = colors.author(userMap.get(comment.creator) || `user:${comment.creator}`)
+        const time = colors.timestamp(formatRelativeDate(comment.posted))
+        console.log(`${author}  ${time}  ${colors.timestamp(`id:${comment.id}`)}`)
+        console.log(options.raw ? comment.content : comment.content)
+        console.log('')
+      }
     }
   }
 }
@@ -185,6 +266,8 @@ export function registerThreadCommand(program: Command): void {
   thread
     .command('view <thread-ref>')
     .description('Display a thread with its comments')
+    .option('--unread', 'Show only unread comments (with original post for context)')
+    .option('--context <n>', 'Include N read comments before unread (use with --unread)')
     .option('--limit <n>', 'Max comments to show (default: 50)')
     .option('--since <date>', 'Comments newer than')
     .option('--until <date>', 'Comments older than')
