@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { formatRelativeDate, parseDate } from '../../src/lib/dates.js'
+import { formatRelativeDate, parseDate } from '../../lib/dates.js'
 
 describe('formatRelativeDate', () => {
   beforeEach(() => {

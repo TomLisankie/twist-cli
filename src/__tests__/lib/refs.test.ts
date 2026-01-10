@@ -8,7 +8,7 @@ import {
   resolveCommentId,
   resolveConversationId,
   resolveMessageId,
-} from '../../src/lib/refs.js'
+} from '../../lib/refs.js'
 
 describe('isIdRef', () => {
   it('returns true for id: prefixed strings', () => {
