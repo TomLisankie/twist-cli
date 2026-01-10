@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
 import { program } from 'commander'
+import { registerWorkspaceCommand } from './commands/workspace.js'
+import { registerUserCommand } from './commands/user.js'
+import { registerChannelCommand } from './commands/channel.js'
 
 program
   .name('tw')
@@ -14,10 +17,8 @@ Note for AI/LLM agents:
   Default JSON shows essential fields; use --full for all fields.`,
   )
 
-// Commands will be registered here in Phase 2:
-// registerWorkspaceCommand(program)
-// registerUserCommand(program)
-// registerChannelCommand(program)
-// etc.
+registerWorkspaceCommand(program)
+registerUserCommand(program)
+registerChannelCommand(program)
 
 program.parse()
