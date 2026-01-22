@@ -36,9 +36,7 @@ export class ClaudeCodeInstaller implements SkillInstaller {
         const exists = await this.isInstalled(options)
 
         if (exists && !options.force) {
-            throw new Error(
-                `Skill already installed at ${skillPath}. Use --force to overwrite.`,
-            )
+            throw new Error(`Skill already installed at ${skillPath}. Use --force to overwrite.`)
         }
 
         await mkdir(dirname(skillPath), { recursive: true })
