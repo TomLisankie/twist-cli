@@ -10,6 +10,7 @@ import { registerInboxCommand } from './commands/inbox.js'
 import { registerMsgCommand } from './commands/msg.js'
 import { registerReactCommand } from './commands/react.js'
 import { registerSearchCommand } from './commands/search.js'
+import { registerSkillCommand } from './commands/skill.js'
 import { registerThreadCommand } from './commands/thread.js'
 import { registerUserCommand } from './commands/user.js'
 import { registerWorkspaceCommand } from './commands/workspace.js'
@@ -39,5 +40,6 @@ registerMsgCommand(program)
 registerSearchCommand(program)
 registerReactCommand(program)
 registerAuthCommand(program)
+registerSkillCommand(program)
 
 program.parse()
