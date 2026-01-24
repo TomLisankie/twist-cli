@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Doist/twist-cli/compare/v1.2.0...v1.3.0) (2026-01-24)
+
+
+### Features
+
+* add hidden interactive prompt for auth token input ([#20](https://github.com/Doist/twist-cli/issues/20)) ([1a5b7be](https://github.com/Doist/twist-cli/commit/1a5b7bef835fa5b752285e1954d7857e07c6c28c))
+
 # [1.2.0](https://github.com/Doist/twist-cli/compare/v1.1.0...v1.2.0) (2026-01-23)
 
 
