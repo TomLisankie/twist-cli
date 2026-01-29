@@ -13,7 +13,7 @@ vi.mock('chalk', () => ({
 }))
 
 import { registerSkillCommand } from '../commands/skill.js'
-import { SKILL_CONTENT } from '../lib/skills/content.js'
+import { SKILL_FILE_CONTENT } from '../lib/skills/content.js'
 import { createInstaller } from '../lib/skills/create-installer.js'
 import { getInstaller, listAgentNames, listAgents, skillInstallers } from '../lib/skills/index.js'
 
@@ -113,17 +113,17 @@ describe('installer operations', () => {
 
         const skillPath = installer.getInstallPath({ local: true })
         const content = await readFile(skillPath, 'utf-8')
-        expect(content).toBe(SKILL_CONTENT)
+        expect(content).toBe(SKILL_FILE_CONTENT)
     })
 
     it('reports not installed initially', async () => {
-        const installer = skillInstallers['codex']
+        const installer = skillInstallers.codex
         const installed = await installer.isInstalled({ local: true })
         expect(installed).toBe(false)
     })
 
     it('throws when installing without force if exists', async () => {
-        const installer = skillInstallers['cursor']
+        const installer = skillInstallers.cursor
         await installer.install({ local: true })
         await expect(installer.install({ local: true })).rejects.toThrow(
             /already installed.*Use --force/,
@@ -137,7 +137,7 @@ describe('installer operations', () => {
     })
 
     it('uninstalls skill', async () => {
-        const installer = skillInstallers['codex']
+        const installer = skillInstallers.codex
         await installer.install({ local: true })
         await installer.uninstall({ local: true })
         const installed = await installer.isInstalled({ local: true })
@@ -145,7 +145,7 @@ describe('installer operations', () => {
     })
 
     it('throws when uninstalling non-existent skill', async () => {
-        const installer = skillInstallers['cursor']
+        const installer = skillInstallers.cursor
         await expect(installer.uninstall({ local: true })).rejects.toThrow(/not installed/)
     })
 })
@@ -225,6 +225,8 @@ describe('skill command', () => {
         const skillPath = join(testDir, '.claude', 'skills', 'twist-cli', 'SKILL.md')
         const stats = await stat(skillPath)
         expect(stats.isFile()).toBe(true)
+        const content = await readFile(skillPath, 'utf-8')
+        expect(content).toBe(SKILL_FILE_CONTENT)
     })
 
     it('installs codex agent locally', async () => {
