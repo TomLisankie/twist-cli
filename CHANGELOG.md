@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Doist/twist-cli/compare/v1.4.0...v1.5.0) (2026-01-29)
+
+
+### Features
+
+* add --progress-jsonl flag for machine-readable progress reporting ([#24](https://github.com/Doist/twist-cli/issues/24)) ([3d7a266](https://github.com/Doist/twist-cli/commit/3d7a266574f97bcc480f5023d5251f1839309318))
+
 # [1.4.0](https://github.com/Doist/twist-cli/compare/v1.3.1...v1.4.0) (2026-01-29)
 
 
