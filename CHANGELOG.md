@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/Doist/twist-cli/compare/v1.3.1...v1.4.0) (2026-01-29)
+
+
+### Bug Fixes
+
+* **deps:** update to latest `@doist/twist-sdk` package ([8a8cd6d](https://github.com/Doist/twist-cli/commit/8a8cd6de86bcce56bb01f2f64edd9835fe89407d))
+
+
+### Features
+
+* add GitHub Action workflow for automated @doist/twist-sdk updates ([7cbdeb1](https://github.com/Doist/twist-cli/commit/7cbdeb184876b244ef26d948fc751c8b6a98b94a))
+
 ## [1.3.1](https://github.com/Doist/twist-cli/compare/v1.3.0...v1.3.1) (2026-01-27)
 
 
