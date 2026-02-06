@@ -241,12 +241,12 @@ async function replyToThread(
         recipients = notifyValue
     } else {
         recipients = notifyValue.split(',').map((id) => {
-            const num = parseInt(id.trim(), 10)
-            if (isNaN(num)) {
-                console.error(`Invalid user ID: ${id.trim()}`)
+            const trimmed = id.trim()
+            if (!/^\d+$/.test(trimmed)) {
+                console.error(`Invalid user ID: ${trimmed}`)
                 process.exit(1)
             }
-            return num
+            return Number(trimmed)
         })
     }
 
