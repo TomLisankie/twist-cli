@@ -487,7 +487,6 @@ tw search "project" --ndjson
 - `tw thread create` - Create new threads
 - `tw msg start` - Start new conversations
 - `tw thread done --all` - Bulk archive
-- Reply recipients/mentions (`--notify`)
 - `tw link` command - URLs shown in output instead
 - `tw open` - Open in browser
 - `tw star` / `tw mute` - Star/mute content

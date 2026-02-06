@@ -22,6 +22,7 @@ interface ViewOptions {
 
 interface ReplyOptions {
     dryRun?: boolean
+    notify?: string
 }
 
 interface DoneOptions {
@@ -234,8 +235,24 @@ async function replyToThread(
         process.exit(1)
     }
 
+    const notifyValue = options.notify ?? 'EVERYONE_IN_THREAD'
+    let recipients: string | number[]
+    if (notifyValue === 'EVERYONE' || notifyValue === 'EVERYONE_IN_THREAD') {
+        recipients = notifyValue
+    } else {
+        recipients = notifyValue.split(',').map((id) => {
+            const num = parseInt(id.trim(), 10)
+            if (isNaN(num)) {
+                console.error(`Invalid user ID: ${id.trim()}`)
+                process.exit(1)
+            }
+            return num
+        })
+    }
+
     if (options.dryRun) {
         console.log('Dry run: would post comment to thread', threadId)
+        console.log(`Notify: ${Array.isArray(recipients) ? recipients.join(', ') : recipients}`)
         console.log('')
         console.log(replyContent)
         return
@@ -246,7 +263,8 @@ async function replyToThread(
     const comment = await client.comments.createComment({
         threadId,
         content: replyContent,
-    })
+        recipients,
+    } as Parameters<typeof client.comments.createComment>[0])
 
     const url = getFullTwistURL({
         workspaceId: thread.workspaceId,
@@ -291,6 +309,10 @@ export function registerThreadCommand(program: Command): void {
     thread
         .command('reply <thread-ref> [content]')
         .description('Post a comment to a thread')
+        .option(
+            '--notify <recipients>',
+            'Notification recipients: EVERYONE, EVERYONE_IN_THREAD, or comma-separated user IDs (default: EVERYONE_IN_THREAD)',
+        )
         .option('--dry-run', 'Show what would be posted without posting')
         .action(replyToThread)
 
