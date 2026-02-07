@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/Doist/twist-cli/compare/v1.5.0...v1.6.0) (2026-02-07)
+
+
+### Bug Fixes
+
+* strictly validate user IDs in --notify to reject non-numeric input ([d8e9ee5](https://github.com/Doist/twist-cli/commit/d8e9ee598e970dca1e5d1d98b9f74d8985b9b0f8))
+
+
+### Features
+
+* add recipients option ([91fdc05](https://github.com/Doist/twist-cli/commit/91fdc0592e567fb4832bdb59473de746f3034f5f))
+
 # [1.5.0](https://github.com/Doist/twist-cli/compare/v1.4.0...v1.5.0) (2026-01-29)
 
 
