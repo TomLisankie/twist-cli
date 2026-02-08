@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Doist/twist-cli/compare/v1.6.0...v1.6.1) (2026-02-08)
+
+
+### Bug Fixes
+
+* add missing flags and commands to skill content ([#30](https://github.com/Doist/twist-cli/issues/30)) ([479485a](https://github.com/Doist/twist-cli/commit/479485a387acd1e99894f15bda0078b30efda891))
+
 # [1.6.0](https://github.com/Doist/twist-cli/compare/v1.5.0...v1.6.0) (2026-02-07)
 
 
