@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Doist/twist-cli/compare/v1.8.0...v1.9.0) (2026-02-09)
+
+
+### Features
+
+* upgrade twist-sdk to v2.0.1 and use entity.url instead of getFullTwistURL() ([#31](https://github.com/Doist/twist-cli/issues/31)) ([ce8742b](https://github.com/Doist/twist-cli/commit/ce8742b5e134ab6ee119720f5688ed651c581ed0))
+
 # [1.8.0](https://github.com/Doist/twist-cli/compare/v1.7.0...v1.8.0) (2026-02-09)
 
 
