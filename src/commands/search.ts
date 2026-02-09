@@ -3,6 +3,7 @@ import { Command } from 'commander'
 import { getCurrentWorkspaceId } from '../lib/api.js'
 import { formatRelativeDate } from '../lib/dates.js'
 import { colors, formatJson } from '../lib/output.js'
+import { getPublicChannelIds, includePrivateChannels } from '../lib/public-channels.js'
 import { resolveUserRefs, resolveWorkspaceRef } from '../lib/refs.js'
 import { extendedSearch, type SearchType } from '../lib/search-api.js'
 
@@ -83,8 +84,22 @@ async function search(
         cursor: options.cursor,
     })
 
+    if (!includePrivateChannels()) {
+        const publicIds = await getPublicChannelIds(workspaceId)
+        response.items = response.items.filter(
+            (item) => !item.channelId || publicIds.has(item.channelId),
+        )
+    }
+
     if (response.items.length === 0) {
-        console.log('No results found.')
+        if (response.hasMore && response.nextCursorMark) {
+            console.log('No public results on this page.')
+            console.log(
+                colors.timestamp(`More results available. Use --cursor ${response.nextCursorMark}`),
+            )
+        } else {
+            console.log('No results found.')
+        }
         return
     }
 
