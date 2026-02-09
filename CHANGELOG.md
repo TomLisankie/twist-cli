@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Doist/twist-cli/compare/v1.6.1...v1.7.0) (2026-02-09)
+
+
+### Features
+
+* add --comment flag to thread view ([#28](https://github.com/Doist/twist-cli/issues/28)) ([60fd075](https://github.com/Doist/twist-cli/commit/60fd075a8562b0bd18ad6f10f8805dd87fef2574))
+
 ## [1.6.1](https://github.com/Doist/twist-cli/compare/v1.6.0...v1.6.1) (2026-02-08)
 
 
