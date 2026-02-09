@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Doist/twist-cli/compare/v1.7.0...v1.8.0) (2026-02-09)
+
+
+### Features
+
+* Default to public channels only, add --include-private-channels option ([#27](https://github.com/Doist/twist-cli/issues/27)) ([77c0a18](https://github.com/Doist/twist-cli/commit/77c0a181ab9b2b21db828687cdfd71f25a33800a))
+
 # [1.7.0](https://github.com/Doist/twist-cli/compare/v1.6.1...v1.7.0) (2026-02-09)
 
 
