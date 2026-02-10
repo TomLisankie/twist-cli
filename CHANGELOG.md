@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/Doist/twist-cli/compare/v1.9.0...v1.9.1) (2026-02-10)
+
+
+### Bug Fixes
+
+* **deps:** Update to 2.0.2 of `@doist/twist-sdk` ([#32](https://github.com/Doist/twist-cli/issues/32)) ([bd33220](https://github.com/Doist/twist-cli/commit/bd332208901b1d45396e9227d6117b7b4a226e0c))
+
 # [1.9.0](https://github.com/Doist/twist-cli/compare/v1.8.0...v1.9.0) (2026-02-09)
 
 
