@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Doist/twist-cli/compare/v1.9.1...v1.10.0) (2026-02-12)
+
+
+### Features
+
+* lenient CLI ergonomics — implicit view, workspace flag aliases, conflict detection ([#34](https://github.com/Doist/twist-cli/issues/34)) ([d5c8339](https://github.com/Doist/twist-cli/commit/d5c83391a6bf37edca365bd47d66a1e44a0373bd))
+
 ## [1.9.1](https://github.com/Doist/twist-cli/compare/v1.9.0...v1.9.1) (2026-02-10)
 
 
