@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/Doist/twist-cli/compare/v1.10.0...v1.10.1) (2026-02-13)
+
+
+### Performance Improvements
+
+* lazy-load commands and show early spinner for instant feedback ([#35](https://github.com/Doist/twist-cli/issues/35)) ([1f3629f](https://github.com/Doist/twist-cli/commit/1f3629fddb06bf8524faea5680b4918d3a363dfa))
+
 # [1.10.0](https://github.com/Doist/twist-cli/compare/v1.9.1...v1.10.0) (2026-02-12)
 
 
