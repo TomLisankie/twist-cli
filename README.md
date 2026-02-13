@@ -33,7 +33,7 @@ tw auth login
 ## Usage
 
 ```bash
-tw workspaces                      # list all workspaces
+tw workspace                       # manage workspace
 tw inbox                           # inbox threads
 tw inbox --unread                  # unread threads only
 tw thread view <thread-ref>        # view thread with comments
